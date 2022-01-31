@@ -7,15 +7,18 @@ import CustomerForm from './CustomerForm';
 interface IProps {
   open: boolean,
   setOpen: Dispatch<SetStateAction<boolean>>,
+  baseCustomer?: ICustomer
   getCustomers: () => void,
 }
 
-const CustomerAdd: FC<IProps> = ({open, setOpen, getCustomers}) => {
-  const [customer, setCustomer] = useState<Partial<ICustomer>>({});
+const CustomerEdit: FC<IProps> = ({open, setOpen, getCustomers, baseCustomer}) => {
+  const [customer, setCustomer] = useState<Partial<ICustomer>>(baseCustomer || {});
 
   const handleSubmit = () => {
-    fetch(`${API_URL}/customers`, {
-      method: 'POST',
+    const [self] = baseCustomer ? baseCustomer.links.filter(e => e.rel === 'self') : [{ rel: 'self', href: ''}];
+
+    fetch(self.href, {
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -41,4 +44,4 @@ const CustomerAdd: FC<IProps> = ({open, setOpen, getCustomers}) => {
   )
 }
 
-export default CustomerAdd;
+export default CustomerEdit;

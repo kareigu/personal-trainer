@@ -4,18 +4,40 @@ import { API_URL, ICustomer, ICustomers } from '../utils/api';
 import { createFilter } from '../utils/table';
 import './Customers.css';
 import CustomerAdd from '../components/CustomerAdd';
+import CustomerEdit from '../components/CustomerEdit';
 
 
 const Customers: FC<{}> = () => {
   const [customers, setCustomers] = useState<ICustomer[]>([]);
+
   const [addModalOpen, setAddModalOpen] = useState(false);
 
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [currentEdit, setCurrentEdit] = useState<ICustomer>();
+
   useEffect(() => {
+    getCustomers();
+  }, []);
+
+  const getCustomers = () => {
     fetch(`${API_URL}/customers`)
       .then(res => res.json() as Promise<ICustomers>)
       .then(json => setCustomers(json.content))
       .catch(err => console.error(err));
-  }, []);
+  }
+
+
+  const handleDelete = (c: ICustomer) => {
+    const [self] = c.links.filter(e => e.rel === 'self');
+    fetch(self.href, {
+      method: 'DELETE'
+    })
+      .then(res => {
+        console.info(res);
+        getCustomers();
+      })
+      .catch(err => console.error(err));
+  }
 
   const columns: TableColumnsType<ICustomer> = [
     {
@@ -59,7 +81,7 @@ const Customers: FC<{}> = () => {
       dataIndex: 'streetaddress',
       key: 'streetaddress',
       sorter: (a, b) => a.streetaddress > b.streetaddress ? 1 : -1,
-      filters: createFilter(customers.map(c => c.streetaddress.replace(/^[0-9]+\s|\s[0-9]+$/g, ''))),
+      filters: createFilter(customers.map(c => c.streetaddress?.replace(/^[0-9]+\s|\s[0-9]+$/g, ''))),
       onFilter: (val, rec) => rec.streetaddress.includes(val as string),
       filterSearch: true,
     },
@@ -81,6 +103,36 @@ const Customers: FC<{}> = () => {
       onFilter: (val, rec) => rec.postcode === val,
       filterSearch: true,
     },
+    {
+      title: 'Actions',
+      render: (val, rec) => {
+
+        return (
+          <>
+            <Space>
+              <Button
+                type="primary"
+                shape="round"
+                onClick={() => {
+                  setCurrentEdit(rec);
+                  setEditModalOpen(true);
+                }}
+              >
+                Edit
+              </Button>
+              <Button
+                type="dashed"
+                shape="round"
+                danger
+                onClick={() => handleDelete(rec)}
+              >
+                Remove
+              </Button>
+            </Space>
+          </>
+        )
+      }
+    },
   ]
 
   return (
@@ -100,7 +152,17 @@ const Customers: FC<{}> = () => {
       </Space>
       <Table columns={columns} dataSource={customers} />
 
-      <CustomerAdd open={addModalOpen} setOpen={setAddModalOpen} />
+      <CustomerAdd open={addModalOpen} setOpen={setAddModalOpen} getCustomers={getCustomers} />
+
+      { editModalOpen &&
+        <CustomerEdit 
+          open={editModalOpen} 
+          setOpen={setEditModalOpen} 
+          getCustomers={getCustomers} 
+          baseCustomer={currentEdit} 
+        />
+      }
+
     </div>
   )
 }

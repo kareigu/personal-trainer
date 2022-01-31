@@ -11,13 +11,13 @@ interface IProps {
 }
 
 const CustomerForm: FC<IProps> = ({customer, setCustomer}) => {
-  const [name, setName] = useState('');
-  const [surname, setSurname] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [address, setAddress] = useState('');
-  const [city, setCity] = useState('');
-  const [postcode, setPostcode] = useState('');
+  const [name, setName] = useState(customer.firstname || '');
+  const [surname, setSurname] = useState(customer.lastname || '');
+  const [email, setEmail] = useState(customer.email || '');
+  const [phone, setPhone] = useState(customer.phone || '');
+  const [address, setAddress] = useState(customer.streetaddress || '');
+  const [city, setCity] = useState(customer.city || '');
+  const [postcode, setPostcode] = useState(customer.postcode || '');
 
   useEffect(() => {
     setCustomer({
