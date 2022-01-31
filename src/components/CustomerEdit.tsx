@@ -35,7 +35,7 @@ const CustomerEdit: FC<IProps> = ({open, setOpen, getCustomers, baseCustomer}) =
   return (
     <Modal 
       visible={open}
-      title="Add a new customer"
+      title={`Editing details of ${customer.firstname} ${customer.lastname}`}
       onCancel={() => setOpen(false)}
       onOk={handleSubmit}
     >
