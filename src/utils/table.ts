@@ -1,7 +1,7 @@
 import { ICustomer } from "./api";
 
 
-export function createFilter(fields: string[]) {
+export function createFilter<T>(fields: T[]) {
   const set = [...new Set(fields)];
   return set.map(s => {
     return {

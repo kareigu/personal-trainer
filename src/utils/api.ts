@@ -1,4 +1,7 @@
-
+interface ILink {
+  rel: string,
+  href: string,
+}
 export interface ICustomer {
   city: string,
   content: [],
@@ -8,17 +11,25 @@ export interface ICustomer {
   links: ILink[],
   phone: string,
   postcode: string,
-  streetaddress: string
-}
-
-interface ILink {
-  rel: string,
-  href: string
+  streetaddress: string,
 }
 
 export interface ICustomers {
   content: ICustomer[],
-  links: ILink[]
+  links: ILink[],
+}
+
+export interface ITraining {
+  date: string,
+  duration: number,
+  activity: string,
+  content: [],
+  links: ILink[],
+}
+
+export interface ITrainings {
+  content: ITraining[],
+  links: ILink[],
 }
 
 
