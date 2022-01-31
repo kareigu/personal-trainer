@@ -1,11 +1,14 @@
 import { FC, useEffect, useState } from 'react';
-import { Table, TableColumnsType } from 'antd';
+import { Button, Space, Table, TableColumnsType } from 'antd';
 import { API_URL, ICustomer, ICustomers } from '../utils/api';
 import { createFilter } from '../utils/table';
+import './Customers.css';
+import CustomerAdd from '../components/CustomerAdd';
 
 
 const Customers: FC<{}> = () => {
   const [customers, setCustomers] = useState<ICustomer[]>([]);
+  const [addModalOpen, setAddModalOpen] = useState(false);
 
   useEffect(() => {
     fetch(`${API_URL}/customers`)
@@ -82,8 +85,22 @@ const Customers: FC<{}> = () => {
 
   return (
     <div>
-      <h1>Customers</h1>
+      <Space>
+        <h1>Customers</h1>
+        <div className="top-buttons">
+          <Button
+            type="primary"
+            shape="round"
+            size="small"
+            onClick={() => setAddModalOpen(true)}
+          >
+            Add Customer
+          </Button>
+        </div>
+      </Space>
       <Table columns={columns} dataSource={customers} />
+
+      <CustomerAdd open={addModalOpen} setOpen={setAddModalOpen} />
     </div>
   )
 }
