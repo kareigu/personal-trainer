@@ -57,7 +57,18 @@ const Trainings: FC<{}> = () => {
   return (
     <div>
       <h1>Trainings</h1>
-      <Table columns={columns} dataSource={trainings} />
+      <Table 
+        columns={columns} 
+        dataSource={trainings} 
+        showSorterTooltip
+        pagination={
+          {
+            showQuickJumper: true,
+            showSizeChanger: true,
+            defaultPageSize: 20,
+          }
+        }
+      />
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { Button, Space, Table, TableColumnsType } from 'antd';
+import { Button, Pagination, Space, Table, TableColumnsType } from 'antd';
 import { API_URL, ICustomer, ICustomers } from '../utils/api';
 import { createFilter } from '../utils/table';
 import './Customers.css';
@@ -150,7 +150,18 @@ const Customers: FC<{}> = () => {
           </Button>
         </div>
       </Space>
-      <Table columns={columns} dataSource={customers} />
+      <Table 
+        columns={columns} 
+        dataSource={customers} 
+        showSorterTooltip
+        pagination={
+          {
+            showQuickJumper: true,
+            showSizeChanger: true,
+            defaultPageSize: 20,
+          }
+        }
+      />
 
       <CustomerAdd open={addModalOpen} setOpen={setAddModalOpen} getCustomers={getCustomers} />
 
