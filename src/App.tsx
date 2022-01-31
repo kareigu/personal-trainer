@@ -45,7 +45,7 @@ const App: FC<{}> = () => {
           </Button>
         </Space>
       </Header>
-      <Content>
+      <Content className="content">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/customers" element={<Customers />} />
