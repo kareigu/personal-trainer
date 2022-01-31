@@ -1,43 +1,55 @@
-import { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import { useState, FC } from 'react';
+import { BrowserRouter, Routes, Route, useNavigate, Link } from 'react-router-dom';
+import { Layout, Typography, Button, Space } from 'antd';
+import 'antd/dist/antd.css';
+import './App.css';
+import Home from './pages/Home';
+import Customers from './pages/Customers';
+import Trainings from './pages/Trainings';
 
-function App() {
-  const [count, setCount] = useState(0)
+const { Header, Content, Footer } = Layout;
+const { Title } = Typography;
+
+const App: FC<{}> = () => {
+  const navigate = useNavigate();
+
+  const handleNavigate = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    switch(e.currentTarget.innerText.toLowerCase()) {
+      case 'customers': navigate("/customers"); break;
+      case 'trainings': navigate("/trainings"); break;
+      default: navigate("/"); break;
+    }
+  }
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div className="app">
+      <Header className="navbar">
+        <Space>
+          <Link to="/">
+            <Title className="nav-title">Personal Trainer</Title>
+          </Link>
+        
+          <Button 
+            className="navbutton" 
+            type="link"
+            onClick={handleNavigate}
           >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
+            Customers
+          </Button>
+          <Button 
+            className="navbutton" 
+            type="link"
+            onClick={handleNavigate}
           >
-            Vite Docs
-          </a>
-        </p>
-      </header>
+            Trainings
+          </Button>
+        </Space>
+      </Header>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/customers" element={<Customers />} />
+        <Route path="/trainings" element={<Trainings />} />
+      </Routes>
     </div>
   )
 }
