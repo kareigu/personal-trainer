@@ -22,7 +22,7 @@ const App: FC<{}> = () => {
   }
 
   return (
-    <div className="app">
+    <Layout className="app">
       <Header className="navbar">
         <Space>
           <Link to="/">
@@ -45,12 +45,14 @@ const App: FC<{}> = () => {
           </Button>
         </Space>
       </Header>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/customers" element={<Customers />} />
-        <Route path="/trainings" element={<Trainings />} />
-      </Routes>
-    </div>
+      <Content>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/customers" element={<Customers />} />
+          <Route path="/trainings" element={<Trainings />} />
+        </Routes>
+      </Content>
+    </Layout>
   )
 }
 
