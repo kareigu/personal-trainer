@@ -1,7 +1,7 @@
 import { Button, Input, Space } from 'antd';
-import Modal from 'antd/lib/modal/Modal';
 import { Dispatch, FC, SetStateAction, useEffect, useMemo, useState } from 'react'
 import { ICustomer } from '../utils/api';
+import './CustomerForm.css'
 
 type Customer = ICustomer | Partial<ICustomer>
 
