@@ -4,6 +4,7 @@ import { Layout, Typography, Button, Space, Spin } from 'antd';
 import 'antd/dist/antd.css';
 import './App.css';
 
+
 const { Header, Content, Footer } = Layout;
 const { Title } = Typography;
 
@@ -14,6 +15,7 @@ const App: FC<{}> = () => {
     switch(e.currentTarget.innerText.toLowerCase()) {
       case 'customers': navigate("/customers"); break;
       case 'trainings': navigate("/trainings"); break;
+      case 'calendar': navigate("/calendar"); break;
       default: navigate("/"); break;
     }
   }
@@ -44,6 +46,13 @@ const App: FC<{}> = () => {
             onClick={handleNavigate}
           >
             Trainings
+          </Button>
+          <Button 
+            className="navbutton" 
+            type="link"
+            onClick={handleNavigate}
+          >
+            Calendar
           </Button>
         </Space>
       </Header>

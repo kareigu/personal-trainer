@@ -32,5 +32,14 @@ export interface ITrainings {
   links: ILink[],
 }
 
+export interface ICalendarCustomer extends Omit<ICustomer, 'links' | 'content'> {
+  id: number,
+}
+
+export interface ITrainingCalendar extends Omit<ITraining, 'content' | 'links'> {
+  id: number,
+  customer: ICalendarCustomer,
+}
+
 
 export const API_URL = 'https://customerrest.herokuapp.com/api'
