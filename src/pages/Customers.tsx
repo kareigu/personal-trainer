@@ -1,5 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import { Button, Pagination, Popconfirm, Space, Table, TableColumnsType } from 'antd';
+import CsvDownload from 'react-json-to-csv';
 import { API_URL, ICustomer, ICustomers } from '../utils/api';
 import { createFilter } from '../utils/table';
 import './Customers.css';
@@ -160,14 +161,21 @@ const Customers: FC<{}> = () => {
       <Space>
         <h1>Customers</h1>
         <div className="top-buttons">
-          <Button
-            type="primary"
-            shape="round"
-            size="small"
-            onClick={() => setAddModalOpen(true)}
-          >
-            Add Customer
-          </Button>
+          <Space>
+            <Button
+              type="primary"
+              shape="round"
+              size="small"
+              onClick={() => setAddModalOpen(true)}
+            >
+              Add Customer
+            </Button>
+            <CsvDownload 
+              data={customers}
+              filename={`customers-${Date.now()}.csv`}
+              className="ant-btn ant-btn-primary ant-btn-round ant-btn-sm"
+            />
+          </Space>
         </div>
       </Space>
       <Table 

@@ -1,11 +1,8 @@
-import { useState, FC } from 'react';
+import { useState, FC, lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, useNavigate, Link } from 'react-router-dom';
-import { Layout, Typography, Button, Space } from 'antd';
+import { Layout, Typography, Button, Space, Spin } from 'antd';
 import 'antd/dist/antd.css';
 import './App.css';
-import Home from './pages/Home';
-import Customers from './pages/Customers';
-import Trainings from './pages/Trainings';
 
 const { Header, Content, Footer } = Layout;
 const { Title } = Typography;
@@ -20,6 +17,11 @@ const App: FC<{}> = () => {
       default: navigate("/"); break;
     }
   }
+
+  const Home = lazy(() => import('./pages/Home'));
+  const Customers = lazy(() => import('./pages/Customers'));
+  const Trainings = lazy(() => import('./pages/Trainings'));
+  const Calendar = lazy(() => import('./pages/Calendar'));
 
   return (
     <Layout className="app">
@@ -46,11 +48,25 @@ const App: FC<{}> = () => {
         </Space>
       </Header>
       <Content className="content">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/customers" element={<Customers />} />
-          <Route path="/trainings" element={<Trainings />} />
-        </Routes>
+        <Suspense
+          fallback={
+            <div style={{
+              display: 'flex', 
+              justifyContent: 'center', 
+              alignItems: 'center',
+              marginTop: '10rem',
+              }}>
+              <Spin />
+            </div>
+          }
+        >
+          <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/customers" element={<Customers />} />
+              <Route path="/trainings" element={<Trainings />} />
+              <Route path="/calendar" element={<Calendar />}/>
+          </Routes>
+        </Suspense>
       </Content>
     </Layout>
   )
