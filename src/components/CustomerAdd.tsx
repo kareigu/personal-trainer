@@ -1,6 +1,8 @@
+import { Alert } from 'antd';
 import Modal from 'antd/lib/modal/Modal';
 import { Dispatch, FC, SetStateAction, useState } from 'react'
 import { API_URL, ICustomer } from '../utils/api';
+import { AlertData } from '../utils/forms';
 import CustomerForm from './CustomerForm';
 
 interface IProps {
@@ -11,6 +13,7 @@ interface IProps {
 
 const CustomerAdd: FC<IProps> = ({open, setOpen, getCustomers}) => {
   const [customer, setCustomer] = useState<Partial<ICustomer>>({});
+  const [alert, setAlert] = useState<AlertData>();
 
   const handleSubmit = () => {
     fetch(`${API_URL}/customers`, {
@@ -22,10 +25,23 @@ const CustomerAdd: FC<IProps> = ({open, setOpen, getCustomers}) => {
     })
       .then(res => {
         console.info(res);
-        setOpen(false);
-        getCustomers();
+        setAlert({
+          type: 'success',
+          message: 'Successfully added customer'
+        })
+
+        setTimeout(() => {
+          setOpen(false);
+          getCustomers();
+        }, 2000);
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        console.error(err);
+        setAlert({
+          type: 'error',
+          message: 'Error adding customer'
+        })
+      });
   }
 
   return (
@@ -35,6 +51,15 @@ const CustomerAdd: FC<IProps> = ({open, setOpen, getCustomers}) => {
       onCancel={() => setOpen(false)}
       onOk={handleSubmit}
     >
+      { alert &&
+        <Alert
+          showIcon
+          closable
+          type={alert.type}
+          message={alert.message}
+          onClose={() => setAlert(undefined)}
+        />
+      }
       <CustomerForm customer={customer} setCustomer={setCustomer} />
     </Modal>
   )

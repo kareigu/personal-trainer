@@ -1,6 +1,8 @@
+import { Alert } from 'antd';
 import Modal from 'antd/lib/modal/Modal';
 import { Dispatch, FC, SetStateAction, useState } from 'react'
 import { ICustomer } from '../utils/api';
+import { AlertData } from '../utils/forms';
 import CustomerForm from './CustomerForm';
 
 interface IProps {
@@ -12,6 +14,7 @@ interface IProps {
 
 const CustomerEdit: FC<IProps> = ({open, setOpen, getCustomers, baseCustomer}) => {
   const [customer, setCustomer] = useState<Partial<ICustomer>>(baseCustomer || {});
+  const [alert, setAlert] = useState<AlertData>();
 
   const handleSubmit = () => {
     const [self] = baseCustomer ? baseCustomer.links.filter(e => e.rel === 'self') : [{ rel: 'self', href: ''}];
@@ -25,10 +28,23 @@ const CustomerEdit: FC<IProps> = ({open, setOpen, getCustomers, baseCustomer}) =
     })
       .then(res => {
         console.info(res);
-        setOpen(false);
-        getCustomers();
+        setAlert({
+          type: 'success',
+          message: 'Successfully edited information'
+        })
+
+        setTimeout(() => {
+          setOpen(false);
+          getCustomers();
+        }, 2000);
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        console.error(err);
+        setAlert({
+          type: 'error',
+          message: 'Error editing information'
+        })
+      });
   }
 
   return (
@@ -38,6 +54,15 @@ const CustomerEdit: FC<IProps> = ({open, setOpen, getCustomers, baseCustomer}) =
       onCancel={() => setOpen(false)}
       onOk={handleSubmit}
     >
+      { alert &&
+        <Alert
+          showIcon
+          closable
+          type={alert.type}
+          message={alert.message}
+          onClose={() => setAlert(undefined)}
+        />
+      }
       <CustomerForm customer={customer} setCustomer={setCustomer} />
     </Modal>
   )
