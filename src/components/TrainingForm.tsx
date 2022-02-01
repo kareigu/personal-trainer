@@ -67,8 +67,8 @@ const TrainingForm: FC<IProps> = ({customer, open, setOpen}) => {
         });
         setLoading(false);
         setTimeout(() => {
-          setOpen(false);
           setAlert(undefined);
+          setOpen(false);
         }, 2000);
       })
       .catch(err => {
