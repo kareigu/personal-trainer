@@ -5,3 +5,14 @@
   justify-content: center;
   align-items: center;
 }
+
+.stats-chart {
+  margin-top: 12rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chart-title {
+  margin-top: 2rem;
+}
