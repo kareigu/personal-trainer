@@ -1,4 +1,4 @@
-import { Table, TableColumnsType } from 'antd';
+import { Button, Popconfirm, Space, Table, TableColumnsType } from 'antd';
 import { FC, useEffect, useState } from 'react'
 import { API_URL, ITraining, ITrainings } from '../utils/api';
 import { createFilter } from '../utils/table';
@@ -8,12 +8,28 @@ import { DateTime } from 'luxon';
 const Trainings: FC<{}> = () => {
   const [trainings, setTrainings] = useState<ITraining[]>([]);
 
-  useEffect(() => {
+  const getTrainings = () => {
     fetch(`${API_URL}/trainings`)
       .then(res => res.json() as Promise<ITrainings>)
       .then(json => setTrainings(json.content))
       .catch(err => console.error(err));
+  }
+
+  useEffect(() => {
+    getTrainings();
   }, []);
+
+  const handleDelete = (c: ITraining) => {
+    const [self] = c.links.filter(e => e.rel === 'self');
+    fetch(self.href, {
+      method: 'DELETE'
+    })
+      .then(res => {
+        console.info(res);
+        getTrainings();
+      })
+      .catch(err => console.error(err));
+  }
 
   const columns: TableColumnsType<ITraining> = [
     {
@@ -48,6 +64,33 @@ const Trainings: FC<{}> = () => {
 
         return (
           <span>{DateTime.fromISO(rec.date).toLocaleString(DateTime.DATETIME_FULL)}</span>
+        )
+      }
+    },
+    {
+      title: 'Actions',
+      width: '6rem',
+      render: (val, rec) => {
+
+        return (
+          <>
+            <Space>
+              <Popconfirm
+                title="Are you sure?"
+                onConfirm={() => handleDelete(rec)}
+                okText="Yes"
+                cancelText="No"
+              >
+                <Button
+                  type="dashed"
+                  shape="round"
+                  danger
+                >
+                  Remove
+                </Button>
+              </Popconfirm>
+            </Space>
+          </>
         )
       }
     },

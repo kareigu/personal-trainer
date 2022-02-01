@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { Button, Pagination, Space, Table, TableColumnsType } from 'antd';
+import { Button, Pagination, Popconfirm, Space, Table, TableColumnsType } from 'antd';
 import { API_URL, ICustomer, ICustomers } from '../utils/api';
 import { createFilter } from '../utils/table';
 import './Customers.css';
@@ -122,14 +122,20 @@ const Customers: FC<{}> = () => {
               >
                 Edit
               </Button>
-              <Button
-                type="dashed"
-                shape="round"
-                danger
-                onClick={() => handleDelete(rec)}
+              <Popconfirm
+                title="Are you sure?"
+                onConfirm={() => handleDelete(rec)}
+                okText="Yes"
+                cancelText="No"
               >
-                Remove
-              </Button>
+                <Button
+                  type="dashed"
+                  shape="round"
+                  danger
+                >
+                  Remove
+                </Button>
+              </Popconfirm>
             </Space>
           </>
         )
