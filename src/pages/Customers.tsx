@@ -6,6 +6,8 @@ import './Customers.css';
 import CustomerAdd from '../components/CustomerAdd';
 import CustomerEdit from '../components/CustomerEdit';
 
+const STREET_RGX = /^[0-9]+\s|\s[0-9]+$/g;
+
 
 const Customers: FC<{}> = () => {
   const [customers, setCustomers] = useState<ICustomer[]>([]);
@@ -80,8 +82,8 @@ const Customers: FC<{}> = () => {
       title: 'Address',
       dataIndex: 'streetaddress',
       key: 'streetaddress',
-      sorter: (a, b) => a.streetaddress > b.streetaddress ? 1 : -1,
-      filters: createFilter(customers.map(c => c.streetaddress?.replace(/^[0-9]+\s|\s[0-9]+$/g, ''))),
+      sorter: (a, b) => a.streetaddress?.replace(STREET_RGX, '') > b.streetaddress?.replace(STREET_RGX, '') ? 1 : -1,
+      filters: createFilter(customers.map(c => c.streetaddress?.replace(STREET_RGX, ''))),
       onFilter: (val, rec) => rec.streetaddress.includes(val as string),
       filterSearch: true,
     },
