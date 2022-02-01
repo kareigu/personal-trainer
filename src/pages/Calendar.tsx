@@ -7,6 +7,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import { DateTime } from 'luxon';
 import { API_URL, ITrainingCalendar } from '../utils/api';
+import './Calendar.css';
 
 const Calendar: FC<{}> = () => {
   const [events, setEvents] = useState<EventInput[]>([]);
@@ -44,6 +45,8 @@ const Calendar: FC<{}> = () => {
             right: 'dayGridMonth,timeGridWeek,timeGridDay'
           }}
           events={events}
+          firstDay={1}
+          themeSystem=''
         />
       </div>
     </div>

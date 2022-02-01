@@ -1,0 +1,10 @@
+@import '../globals.css';
+
+.fc-button {
+  background-color: var(--main-blue) !important;
+  border: 0px !important;
+}
+
+.fc-button:hover {
+  filter: contrast(2);
+}
