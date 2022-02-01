@@ -5,6 +5,7 @@ import { createFilter } from '../utils/table';
 import './Customers.css';
 import CustomerAdd from '../components/CustomerAdd';
 import CustomerEdit from '../components/CustomerEdit';
+import TrainingForm from '../components/TrainingForm';
 
 const STREET_RGX = /^[0-9]+\s|\s[0-9]+$/g;
 
@@ -13,6 +14,7 @@ const Customers: FC<{}> = () => {
   const [customers, setCustomers] = useState<ICustomer[]>([]);
 
   const [addModalOpen, setAddModalOpen] = useState(false);
+  const [addTrainingModalOpen, setAddTrainingModalOpen] = useState(false);
 
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [currentEdit, setCurrentEdit] = useState<ICustomer>();
@@ -113,6 +115,16 @@ const Customers: FC<{}> = () => {
           <>
             <Space>
               <Button
+                type="default"
+                shape="round"
+                onClick={() => {
+                  setCurrentEdit(rec);
+                  setAddTrainingModalOpen(true);
+                }}
+              >
+                Add Training
+              </Button>
+              <Button
                 type="primary"
                 shape="round"
                 onClick={() => {
@@ -179,6 +191,14 @@ const Customers: FC<{}> = () => {
           setOpen={setEditModalOpen} 
           getCustomers={getCustomers} 
           baseCustomer={currentEdit} 
+        />
+      }
+
+      { addTrainingModalOpen &&
+        <TrainingForm 
+          open={addTrainingModalOpen}
+          setOpen={setAddTrainingModalOpen}
+          customer={currentEdit}
         />
       }
 
