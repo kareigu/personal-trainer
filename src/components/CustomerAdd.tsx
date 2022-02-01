@@ -1,4 +1,3 @@
-import { Button, Input, Space } from 'antd';
 import Modal from 'antd/lib/modal/Modal';
 import { Dispatch, FC, SetStateAction, useState } from 'react'
 import { API_URL, ICustomer } from '../utils/api';

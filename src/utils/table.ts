@@ -1,4 +1,3 @@
-import { ICustomer } from "./api";
 
 
 export function createFilter<T>(fields: T[]) {

@@ -1,8 +1,6 @@
 import '@fullcalendar/react/dist/vdom'
-import { Button, Space } from 'antd';
 import { FC, useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
-import FullCalendar, { EventInput, EventSourceInput } from '@fullcalendar/react';
+import FullCalendar, { EventInput } from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import { DateTime } from 'luxon';

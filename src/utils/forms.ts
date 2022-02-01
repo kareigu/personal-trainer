@@ -1,4 +1,3 @@
-import { AlertProps } from "antd";
 
 
 export type AlertData = IAlertData | undefined;

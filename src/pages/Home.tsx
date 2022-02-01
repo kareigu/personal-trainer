@@ -2,7 +2,7 @@ import { Button, Space, Typography } from 'antd';
 import { FC, useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { Chart, AxisOptions } from 'react-charts';
-import { API_URL, ITraining, ITrainings } from '../utils/api';
+import { API_URL, ITrainings } from '../utils/api';
 import './Home.css';
 
 type TrainingCount = {

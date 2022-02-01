@@ -1,5 +1,5 @@
-import { useState, FC, lazy, Suspense } from 'react';
-import { BrowserRouter, Routes, Route, useNavigate, Link } from 'react-router-dom';
+import { FC, lazy, Suspense } from 'react';
+import { Routes, Route, useNavigate, Link } from 'react-router-dom';
 import { Layout, Typography, Button, Space, Spin } from 'antd';
 import 'antd/dist/antd.css';
 import './App.css';

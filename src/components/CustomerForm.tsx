@@ -1,5 +1,5 @@
-import { Button, Input, Space } from 'antd';
-import { Dispatch, FC, SetStateAction, useEffect, useMemo, useState } from 'react'
+import { Input, Space } from 'antd';
+import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react'
 import { ICustomer } from '../utils/api';
 import './Form.css'
 

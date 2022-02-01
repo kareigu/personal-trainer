@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { Button, Pagination, Popconfirm, Space, Table, TableColumnsType } from 'antd';
+import { Button, Popconfirm, Space, Table, TableColumnsType } from 'antd';
 import CsvDownload from 'react-json-to-csv';
 import { API_URL, ICustomer, ICustomers } from '../utils/api';
 import { createFilter } from '../utils/table';
